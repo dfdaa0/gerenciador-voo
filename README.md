@@ -9,7 +9,7 @@
 - Daniel Araújo <br>
 - Letícia Braga <br>
 - Israel Jhonas <br>
-- Hiago <br>
+- Hiago Celestino<br>
 
 ### Descrição
 O sistema foi desenvolvido em formato de sprints, onde cada semana uma nova demanda era apresentada. O objetivo do sistema é gerenciar as operações de um aeroporto, desde o cadastro de companhias aéreas e aeronaves, até o controle de voos e a execução dos mesmos.
