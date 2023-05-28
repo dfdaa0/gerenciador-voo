@@ -1,0 +1,25 @@
+Arquivos a conferir(editar):
+- Aeronave.php(tipos no construtor);
+- CiaAerea.php(tipos no construtor e atributos);
+- Pedido.php (construct)
+- Viagem.php (atributos) 
+- Pessoa.php (tipagem no construtor, metodos, atributos) 
+
+Arquivos para refazer do zero:
+-Cliente.php
+-Endereco.php
+-Passageiro.php
+-PassageiroVip.php
+
+Arquivos para criar:
+- Sistemas.php(arquivo ja existe, mas sem implementação);
+- Rota.php
+-
+
+
+Arquivos aparentemente corretos mas tem que testar:
+- ENUM Status
+- Passagem.php
+- Linha.php
+- Microonibus.php
+- 
