@@ -13,15 +13,15 @@ class Pessoa extends persist{
     static private $filename = 'pessoa.txt';
   
 
-    public function __construct($nome, $rg, $passaporte, $cpf, $nacionalidade, $nascimento, $email,$endereco) {
+    public function __construct($nome, $rg, $passaporte, $cpf, $nacionalidade, $nascimento, $email, $endereco) {
         $this->nome = $nome;
-        $this->rg = $rg;
-        $this->passaporte = $passaporte;
-        $this->cpf = $cpf;
-        $this->nacionalidade = $nacionalidade;
-        $this->nascimento = $nascimento;
-        $this->email = $email;
-		$this->endereco = $endereco;
+        setRg($rg);
+        setPassaporte($passaporte);
+        setCpf($cpf);
+        setNacionalidade($nacionalidade);
+        setNascimento($nascimento);
+        setEmail($email);
+		    $this->endereco = $endereco;
     }
 
     static public function getFilename(){
@@ -78,55 +78,27 @@ class Pessoa extends persist{
     private function setNascimento(string $nascimento) {
       $pattern = "/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/";
       $nascimento = stringtoupper($nascimento);
-        if (preg_match($pattern, $nascimento) != 1){
+      if (preg_match($pattern, $nascimento) != 1){
         throw new Exception('Data inválida');
-        }
+      }
       $this->$nascimento = $nascimento;
     }
   
-   public function getEmail() {
+    public function getEmail() {
       return $this->email;
     }
   
     private function setEmail(string $email) {
       $pattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
       $email = stringtoupper($email);
-        if (preg_match($pattern, $email) != 1){
+      if (preg_match($pattern, $email) != 1){
         throw new Exception('Email inválido');
-        }
+      }
       $this->$email = $email;
   }
 
-  public function getLogradouro() {
-      return $this->logradouro;
-    }
-
-  public function getNLogradouro() {
-      return $this->nLogradouro;
-    }  
-  
-  public function getBairro() {
-      return $this->bairro;
-    }
-  
-  public function getCep() {
-      return $this->cep;
-    }
-
-  private function setCep(string $cep) {
-      $pattern = "/^\d{5}-\d{3}$/";
-      $email = stringtoupper($cep);
-        if (preg_match($pattern, $cep) != 1){
-        throw new Exception('CEP inválido');
-        }
-      $this->$cep = $cep;
+    public function getNascimento() {
+    return $this->nascimento;
   }
-  
-  public function getCidade() {
-      return $this->cidade;
-    }
 
-  public function getEstado() {
-      return $this->estado;
-    }
 }
