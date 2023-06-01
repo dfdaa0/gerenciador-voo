@@ -8,9 +8,10 @@
       private string $cnpj;
       private string $sigla;
       private float $precoBagagem;
+      private array veiculos;
       static private $filename = 'cia.txt';
       
-      public function __construct($nome, $razaoSocial, $cnpj, $sigla, $precoBagagem) {
+      public function __construct(string $nome, string $razaoSocial, string $cnpj, string $sigla, float $precoBagagem) {
           $this->nome = $nome;
           $this->razaoSocial = $razaoSocial;
           $this->cnpj = $cnpj;
@@ -39,7 +40,7 @@
           return $this->sigla;
       }
     
-      private function setSigla($sigla) {
+      private function setSigla(string $sigla) {
         // $pattern = "/^[A-Z]{2}$/";
         // // $sigla = stringtoupper($sigla);
         // if (preg_match($pattern, $sigla) != 1){
@@ -52,7 +53,7 @@
         return $this->precoBagagem;
       }
 
-      public function setPrecoBagagem($precoBagagem) {
+      public function setPrecoBagagem(float $precoBagagem) {
         if($precoBagagem <= 0){
           throw new Exception("Preço da bagagem deve ser maior que 0.");
         }
