@@ -5,22 +5,22 @@ include_once('Persiste.php');
 class Viagem extends persist{
   private string $codigoViagem;
   private Linha $linha;
-  private string $aeronave;
-  private string $horaPartida;
-  private string $horaChegada;
-  private string $ciaAerea; // Sigla da CiaAerea 
-  private $vagas = array();
-  protected string $dataHora;
+  private Aeronave $aeronave;
+  private Datetime $horaPartida;
+  private Datetime $horaChegada;
+  private Array $vagas;
+  private float $valorMin;
+  private int $pontosViagem;
   static private $filename = 'viagem.txt';
 
-  public function __construct($linha, $aeronave, $horaPartida, $horaChegada, $dataHora, $codigoViagem, $ciaAerea) {
-    $this->dataHora = $dataHora;
+  public function __construct(Linha $linha, Aeronave $aeronave, Datetime $horaPartida, Datetime $horaChegada, float $valorMin, int $pontosViagem) {
     $this->linha = $linha;
     $this->aeronave = $aeronave;
     $this->horaPartida = $horaPartida;
     $this->horaChegada = $horaChegada;
-    // $this->setCodigoViagem($codigoViagem, $ciaAerea);
-    $this->ciaAerea = $ciaAerea;
+    $this->valorMin = $valorMin;
+    $this->pontosViagem = $pontosViagem;
+    createPontosViagem();
   }
   static public function getFilename(){
     return get_called_class()::$filename;
@@ -38,32 +38,20 @@ class Viagem extends persist{
   public function getDay() {
     return $this-> dataHora ->format ("D");
   }
-
-  public function getDataHora() {
-        return $this->dataHora;
-  }
   
   public function getLinha() {
     return $this->linha;
-  }
-
-  public function setLinha($linha) {
-    $this->linha = $linha;
   }
 
   public function getAeronave() {
     return $this->aeronave;
   }
 
-  public function setAeronave($aeronave) {
-    $this->aeronave = $aeronave;
-  }
-
   public function getHoraPartida() {
     return $this->horaPartida;
   }
 
-  public function setHoraPartida($horaPartida) {
+  public function setHoraPartida(DateTime $horaPartida) {
     $this->horaPartida = $horaPartida;
   }
 
@@ -71,7 +59,7 @@ class Viagem extends persist{
     return $this->horaChegada;
   }
 
-  public function setHoraChegada($horaChegada) {
+  public function setHoraChegada(Datetime $horaChegada) {
     $this->horaChegada = $horaChegada;
   }
 
@@ -79,12 +67,12 @@ class Viagem extends persist{
     return $this->codigoViagem;
   }
 
-  private function setCodigoViagem($codigoViagem, $ciaAerea) {
+  private function setCodigoViagem(string $codigoViagem) {
     if (strlen($codigoViagem) != 6 || !ctype_alpha(substr($codigoViagem, 0, 2)) || !ctype_digit(substr($codigoViagem, 2))) {
       echo "Formatação incorreta. Exemplo: AA2222";
       return false;
     }
-    if (substr($codigoViagem, 0, 2) != $ciaAerea) {
+    if (substr($codigoViagem, 0, 2) != $this->ciaAerea) {
       echo "Sigla da Companhia Aérea não coincide";
       return false;
     }
@@ -94,19 +82,25 @@ class Viagem extends persist{
     }
   }
 
-  public function getCiaAerea() {
-    return $this->ciaAerea;
+  public function getValorMin() {
+    return $this->pontosViagem;
   }
   
-  public function validaCodigoViagem($codigoViagem, $ciaAerea) {
+  private function setValorMin(int $pontosViagem){
+    // implementar
+  }
+  
+  public function getPontosViagem() {
+    return $this->pontosViagem;
+  }
+  
+  private function setPontosViagem(int $pontosViagem){
+    // implementar
+  }
+
+
+  private function createPontosViagem(){
+    // implementar
+  };
 
 }
-}
-/*
-$dataHora = DateTime::createFromFormat('Y-m-d H:i:s', '2021-10-01 10:30:00');
-$viagem = new Viagem('linha1', 'aeronave1', '10:30', '15:30', $dataHora);
-echo "Hora Partida: " . $viagem->getDataHora()->format('Y-m-d H:i:s') . PHP_EOL;
-
-echo "aeronave: " . $viagem->getAeronave() . PHP_EOL;
-echo "Hora Partida: " . $viagem->getHoraPartida() . PHP_EOL;
-*/
