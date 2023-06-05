@@ -13,12 +13,12 @@ class Linha extends persist{
     private ciaAerea $proprietaria;
     static private $filename = 'linha.txt';
 
-    public function __construct( $origem,  $destino, $horarioPartida,  $duracaoEstimada,  $codLinha, $aeronave, $ciaAerea) {
+    public function __construct(string $origem, string $destino, DateTime $horarioPartida, int $duracaoEstimada, string $codLinha, Aeronave $aeronave, CiaAerea $proprietaria) {
           $this->origem = $origem;
           $this->destino = $destino;
           $this->horarioPartida = $horarioPartida;
           $this->duracaoEstimada = $duracaoEstimada;
-          if(this->setCodLinha($codLinha)){
+          if($this->setCodLinha($codLinha)){
                   $this->codLinha = $codLinha;
           }
           $this->aeronave = $aeronave;
@@ -58,18 +58,18 @@ class Linha extends persist{
         return $this->aeronave;
     }
 
-    public function setAeronave($aeronave) {
+    public function setAeronave(Aeronave $aeronave) {
         $this->aeronave = $aeronave;
     }
 
     
 
     public function getCiaAerea() {
-        return $this->ciaAerea;
+        return $this->proprietaria;
     }
 
 //checa se o código está no formato certo
-    private function setCodLinha($codLinha){
+    private function setCodLinha(string $codLinha){
       if (strlen($codLinha) != 6) {  
         return false;
       }
@@ -85,5 +85,5 @@ class Linha extends persist{
     }     
   return true;
 }
-
+}
 ?>

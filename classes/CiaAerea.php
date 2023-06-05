@@ -8,7 +8,7 @@
       private string $cnpj;
       private string $sigla;
       private float $precoBagagem;
-      private array veiculos;
+      private array $veiculos;
       static private $filename = 'cia.txt';
       
       public function __construct(string $nome, string $razaoSocial, string $cnpj, string $sigla, float $precoBagagem) {
