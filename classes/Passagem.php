@@ -77,7 +77,7 @@ class Passagem extends persist{
 
   public function cancelaPassagem(){
     for ($i=0; $i < count($this->status); $i++) { 
-      $this->status[] = EnumStatus::PassagemCancelada;
+      $this->status[$i] = EnumStatus::PassagemCancelada;
     }
     
   }
@@ -88,7 +88,7 @@ class Passagem extends persist{
 
   public function fazNoShow(){
     for ($i=0; $i < count($this->status); $i++) { 
-      $this->status[] = EnumStatus::NoShow;
+      $this->status[$i] = EnumStatus::NoShow;
     }
   }
 
