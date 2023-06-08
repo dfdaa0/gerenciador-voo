@@ -2,22 +2,26 @@
 include_once("Persiste.php");
 class Endereco extends persist{
     protected string $logradouro;
-    protected string $numero;
+    protected int $numero;
     protected string $complemento;
     protected string $bairro;
     protected string $cidade;
     protected string $estado;
     protected string $cep;
+    protected float $longitude;
+    protected float $latitude;
     static private $filename = 'Endereco.txt';
 
-    public function __construct(string $logradouro, string $numero, string $complemento, string $bairro, string $cidade, string $estado, string $cep) {
+    public function __construct(string $logradouro, int $numero, string $complemento, string $bairro, string $cidade, string $estado, string $cep, float $longitude, float $latitude) {
         $this->logradouro = $logradouro;
         $this->numero = $numero;
         $this->complemento = $complemento;
         $this->bairro = $bairro;
         $this->cidade = $cidade;
         $this->estado = $estado;
-        $this->cep = $cep;
+        $this->setCep($cep);
+        $this->longitude = $longitude;
+        $this->latitude = $latitude;
     }
 
     static public function getFilename(){
@@ -50,6 +54,34 @@ class Endereco extends persist{
 
     public function getCep(){
         return $this->cep;
+    }
+
+    private function setCep(string $cep){
+        if(strlen($cep)!=9){
+            throw new Exception('Cep inválido');
+        }
+        for ($i=0; $i < 5; $i++) { 
+            if(!is_numeric($cep[$i])){
+                throw new Exception('Cep inválido');
+            }
+        }
+        if($cep[5]!="-"){
+            throw new Exception('Cep inválido');
+        }
+        for ($i=6; $i < 9; $i++) { 
+            if(!is_numeric($cep[$i])){
+                throw new Exception('Cep inválido');
+            }
+        }
+        $this->cep = $cep;
+    }
+
+    public function getLongitude(){
+        return $this->longitude;
+    }
+
+    public function getLatitude(){
+        return $this->latitude;
     }
 
 }

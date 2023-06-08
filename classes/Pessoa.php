@@ -7,13 +7,14 @@ class Pessoa extends persist{
     protected string $passaporte;
     protected string $cpf;
     protected string $nacionalidade;
-    protected string $nascimento;
+    protected DateTime $nascimento;
     protected string $email;
     protected Endereco $endereco;
     static private $filename = 'pessoa.txt';
   
 
-    public function __construct($nome, $rg, $passaporte, $cpf, $nacionalidade, $nascimento, $email, $endereco) {
+    public function __construct(string $nome, string $rg, string $passaporte, string $cpf,
+      string $nacionalidade, string $nascimento, string $email, Endereco $endereco) {
         $this->nome = $nome;
         $this->setRg($rg);
         $this->setPassaporte($passaporte);
@@ -50,7 +51,7 @@ class Pessoa extends persist{
     }
 
     private function setPassaporte(string $passaporte) {
-        $pattern = "/^[A-Z]{2}\d{7}$/";
+        $pattern = "/^[A-Z]{2}\d{6}$/";
         $passaporte = strtoupper($passaporte);
         if (preg_match($pattern, $passaporte) != 1){
             throw new Exception('Passaporte inválido');
@@ -81,7 +82,7 @@ class Pessoa extends persist{
       if (preg_match($pattern, $nascimento) != 1){
         throw new Exception('Data inválida');
       }
-      $this->$nascimento = $nascimento;
+      $this->nascimento = DateTime::createFromFormat('d/m/Y', $nascimento);
     }
   
     public function getEmail() {
@@ -94,11 +95,15 @@ class Pessoa extends persist{
       if (preg_match($pattern, $email) != 1){
         throw new Exception('Email inválido');
       }
-      $this->$email = $email;
+      $this->email = $email;
   }
 
     public function getNascimento() {
     return $this->nascimento;
+  }
+
+  public function getEndereco(){
+    return $this->endereco;
   }
 
 }

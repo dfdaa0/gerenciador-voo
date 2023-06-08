@@ -12,7 +12,7 @@ class PassageiroVip extends Passageiro{
   }
 
   public function __construct(int $registro, ProgramaDeMilhas $programaDeMilhas, Pontos $pontos, string $nome, string $rg, string $passaporte,
-    string $cpf, string $nacionalidade, DateTime $nascimento, string $email, Endereco $endereco){
+    string $cpf, string $nacionalidade, string $nascimento, string $email, Endereco $endereco){
     $this->programaDeMilhas = $programaDeMilhas;
     $this->registro = $registro;
     $this->pontos = $pontos;

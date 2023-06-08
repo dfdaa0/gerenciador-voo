@@ -6,7 +6,7 @@ class Cliente extends Pessoa{
   static private $filename = 'cliente.txt';
   
   public function __construct(string $nome, string $rg, string $passaporte,
-  string $cpf, string $nacionalidade, DateTime $nascimento, string $email, Endereco $endereco){
+  string $cpf, string $nacionalidade, string $nascimento, string $email, Endereco $endereco){
     parent::__construct($nome, $rg, $passaporte, $cpf, $nacionalidade, $nascimento, $email, $endereco);
   }
 
