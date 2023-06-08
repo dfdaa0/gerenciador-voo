@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 include_once('Persiste.php');
-class Pts extends persist{
-	  private valor $valor;
-	  private DataExpiracao $dataExpiracao;
-	  static private $filename = 'Pts.txt';
-	  public function __construct($valor, $dataExpiracao){
+class Pontos extends persist{
+	  private int $valor;
+	  private DateTime $dataExpiracao;
+	  static private $filename = 'Pontos.txt';
+	  public function __construct(int $valor, DateTime $dataExpiracao){
 		    $this->valor = $valor;
 		    $this->dataExpiracao = $dataExpiracao;
 	  }

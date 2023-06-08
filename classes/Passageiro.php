@@ -2,14 +2,24 @@
 declare(strict_types=1);
 include_once('Persiste.php');
 class Passageiro extends Pessoa{
+  protected Array $passagens;
   static private $filename = 'passageiro.txt';
   
   static public function getFilename() {
     return get_called_class()::$filename;
   }
 
-  __construct($nome, $rg, $passaporte, $cpf, $nacionalidade, $nascimento, $email){
-    parent::__construct($nome, $rg, $passaporte, $cpf, $nacionalidade, $nascimento, $email);
+  public function __construct(string $nome, string $rg, string $passaporte,
+  string $cpf, string $nacionalidade, DateTime $nascimento, string $email, Endereco $endereco){
+    parent::__construct($nome, $rg, $passaporte, $cpf, $nacionalidade, $nascimento, $email, $endereco);
+  }
+
+  public function getListaPassagens(){
+    return $this->passagens;
+  }
+
+  public function addPassagem(Passagem $passagem){
+    $this->passagens[] = $passagem;
   }
   
 }

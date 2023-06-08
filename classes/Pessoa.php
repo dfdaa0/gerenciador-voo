@@ -15,12 +15,12 @@ class Pessoa extends persist{
 
     public function __construct($nome, $rg, $passaporte, $cpf, $nacionalidade, $nascimento, $email, $endereco) {
         $this->nome = $nome;
-        setRg($rg);
-        setPassaporte($passaporte);
-        setCpf($cpf);
-        setNacionalidade($nacionalidade);
-        setNascimento($nascimento);
-        setEmail($email);
+        $this->setRg($rg);
+        $this->setPassaporte($passaporte);
+        $this->setCpf($cpf);
+        $this->nacionalidade = $nacionalidade;
+        $this->setNascimento($nascimento);
+        $this->setEmail($email);
 		    $this->endereco = $endereco;
     }
 
@@ -77,7 +77,7 @@ class Pessoa extends persist{
 
     private function setNascimento(string $nascimento) {
       $pattern = "/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/";
-      $nascimento = stringtoupper($nascimento);
+      $nascimento = strtoupper($nascimento);
       if (preg_match($pattern, $nascimento) != 1){
         throw new Exception('Data inválida');
       }
@@ -90,7 +90,7 @@ class Pessoa extends persist{
   
     private function setEmail(string $email) {
       $pattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
-      $email = stringtoupper($email);
+      $email = strtoupper($email);
       if (preg_match($pattern, $email) != 1){
         throw new Exception('Email inválido');
       }
