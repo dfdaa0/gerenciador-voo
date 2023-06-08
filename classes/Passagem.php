@@ -72,7 +72,9 @@ class Passagem extends persist{
   }
 
   public function fazCheckIn(Viagem $viagem){
-    $this->status[$viagem->getCodigoViagem()] = EnumStatus::CheckinRealizado;
+    for ($i=0; $i < count($this->status); $i++) {
+      $this->status[$i] = EnumStatus::CheckinRealizado;
+    }
   }
 
   public function cancelaPassagem(){
