@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
-  class EnumStatus {
-    const PA = "Passagem adquirida"
-    const PC = "Passagem cancelada"
-    const CR = "Check-in realizado"
-    const ER = "Embarque realizado"
-    const NS = "NO SHOW"
+  enum EnumStatus: int {
+    case PassagemAdquirida = 0;
+    case PassagemCancelada = 1;
+    case CheckinRealizado = 3;
+    case EmbarqueRealizado = 4;
+    case NoShow = 5;
   }
 ?>

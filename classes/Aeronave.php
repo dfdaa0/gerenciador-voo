@@ -6,7 +6,7 @@ class Aeronave extends Veiculo{
     private string $registro;
     static private $filename = 'aeronave.txt';
   
-    public function __construct(float $capacidadeCarga, string $registro) {   
+    public function __construct(string $fabricante, string $modelo, int $capacidadePass, CiaAerea $proprietaria, float $capacidadeCarga, string $registro) {   
       parent::__construct($fabricante, $modelo, $capacidadePass, $proprietaria);  
       $this->capacidadeCarga = $capacidadeCarga;
         if($this->validaRegistro($registro)){
@@ -26,7 +26,7 @@ class Aeronave extends Veiculo{
       return $this->registro;
     }
 
-    private function validaRegistro($registro) {
+    private function validaRegistro(string $registro) {
       if (strlen($registro) != 6 || $registro[2] != '-') {  
         return false;
       }

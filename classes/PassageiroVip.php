@@ -11,7 +11,8 @@ class PassageiroVip extends Passageiro{
     return get_called_class()::$filename;
   }
 
-  __construct($registro, $programaDeMilhas, $pontos, $nome, $rg, $passaporte, $cpf, $nacionalidade, $nascimento, $email){
+  __construct(int $registro, ProgramaDeMilhas $programaDeMilhas, Pontos $pontos, string $nome, string $rg, string $passaporte,
+    string $cpf, string $nacionalidade, DateTime $nascimento, string $email){
     $this->programaDeMilhas = $programaDeMilhas;
     $this->registro = $registro;
     $this->pontos = $pontos;

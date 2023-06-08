@@ -5,16 +5,21 @@ include_once('Persiste.php');
 class Veiculo extends persist{
   protected string $fabricante;
   protected string $modelo;
-  protected int $capacidadePass;
+  protected int $capacidadePassageiros;
   protected CiaAerea $proprietaria;
+  static private $filename = 'veiculo.txt';
 
-  public function __construct($fabricante, $modelo, $capacidadePass, $proprietaria){
+  public function __construct(string $fabricante, string $modelo, int $capacidadePassageiros, CiaAerea $proprietaria){
     $this->fabricante = $fabricante;
     $this->modelo = $modelo;
-    $this->capacidadePass = $capacidadePass;
+    $this->capacidadePassageiros = $capacidadePassageiros;
     $this->proprietaria = $proprietaria;
   }
   
+  static public function getFilename(){
+    return get_called_class()::$filename;
+  }
+
   public function getFabricante(){
   return $this->fabricante;
 }
@@ -23,8 +28,8 @@ class Veiculo extends persist{
   return $this->modelo;
 }
   
-  public function getCapacidadePass(){
-  return $this->capacidadePass;
+  public function getCapacidadePassageiros(){
+  return $this->capacidadePassageiros;
 }
   
   public function getProprietaria(){
