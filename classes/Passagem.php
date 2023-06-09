@@ -8,7 +8,7 @@ class Passagem extends persist{
   private Array $viagens;
   private Array $status;
   private String $codBarras;
-  private Int $franquias;
+  private Array $franquias;
   //franquias só podem ter no máximo 23kg cada. Falta implementar isso
   static private $filename = 'passagem.txt';
   
@@ -16,7 +16,7 @@ class Passagem extends persist{
     return get_called_class()::$filename;
   }
  
-  Public Function __construct(Passageiro $passageiro, Aeroporto $origem, Aeroporto $destino, Array $viagens, String $codBarras, Int $franquias){
+  Public Function __construct(Passageiro $passageiro, Aeroporto $origem, Aeroporto $destino, Array $viagens, String $codBarras, Array $franquias){
     $this->geraStatus($viagens);
     $this->passageiro = $passageiro;
     $this->origem = $origem;
@@ -56,9 +56,14 @@ class Passagem extends persist{
     return $this->franquias;
   }
 
-  Private Function checaFranquias(int $franquias){
-    if($franquias > 3 || $franquias < 0){
-      return false;
+  Private Function checaFranquias(Array $franquias){
+    if(count($franquias) > 3 || count($franquias) < 0){
+      throw new Exception('Número de franquias inválido');
+    }
+    for ($i=0; $i < count($franquias); $i++) { 
+      if($franquias[$i] > 23 || $franquias[$i] < 0){
+        throw new Exception('Peso de franquias inválido');
+      }
     }
     return true;
   }
@@ -71,9 +76,9 @@ class Passagem extends persist{
     
   }
 
-  public function fazCheckIn(Viagem $viagem){
+  public function fazCheckIn(){
     for ($i=0; $i < count($this->status); $i++) {
-      $this->status[$i] = EnumStatus::CheckinRealizado;
+    $this->status[$i] = EnumStatus::CheckinRealizado;
     }
   }
 
