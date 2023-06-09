@@ -11,12 +11,12 @@ class PassageiroVip extends Passageiro{
     return get_called_class()::$filename;
   }
 
-  __construct(int $registro, ProgramaDeMilhas $programaDeMilhas, Pontos $pontos, string $nome, string $rg, string $passaporte,
-    string $cpf, string $nacionalidade, DateTime $nascimento, string $email){
+  public function __construct(int $registro, ProgramaDeMilhas $programaDeMilhas, Pontos $pontos, string $nome, string $rg, string $passaporte,
+    string $cpf, string $nacionalidade, string $nascimento, string $email, Endereco $endereco){
     $this->programaDeMilhas = $programaDeMilhas;
     $this->registro = $registro;
     $this->pontos = $pontos;
-    parent::__construct($nome, $rg, $passaporte, $cpf, $nacionalidade, $nascimento, $email);
+    parent::__construct($nome, $rg, $passaporte, $cpf, $nacionalidade, $nascimento, $email, $endereco);
 
   }
 
@@ -28,7 +28,7 @@ class PassageiroVip extends Passageiro{
     return $this->registro;
   }
 
-  public function getPts(){
+  public function getPontos(){
     return $this->pontos;
   }
 }

@@ -1,14 +1,12 @@
 <?php
 declare(strict_types=1);
 include_once('Persiste.php');
-class Pedido extends persist{
+class Pedido extends Persist{
   private Cliente $cliente;
-  private BuscaViagem $planoDeVoo;
-  private $listaDePassagens = array();
+  private Array $listaDePassagens;
   static private $filename = 'pedido.txt';
-  public function __construct($cliente, $planoDeVoo, $listaDePassagens){
+  public function __construct(Cliente $cliente, Array $listaDePassagens){
     $this->cliente = $cliente;
-    $this->planoDeVoo = $planoDeVoo;
     $this->listaDePassagens = $listaDePassagens;
   }
   static public function getFilename(){
@@ -17,16 +15,10 @@ class Pedido extends persist{
   public function getCliente(){
     return $this->cliente;
   }
-  public function getOrigem(){
-    return $this->origem;
-  }
-  public function getDestino(){
-    return $this->destino;
-  }
 
   public function getListaDePassagens(){
     return $this->listaDePassagens;
   }
 
-}?
+}
 ?>
