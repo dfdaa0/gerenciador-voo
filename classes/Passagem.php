@@ -9,7 +9,6 @@ class Passagem extends persist{
   private Array $status;
   private String $codBarras;
   private Array $franquias;
-  //franquias só podem ter no máximo 23kg cada. Falta implementar isso
   static private $filename = 'passagem.txt';
   
   static public function getFilename(){
@@ -90,7 +89,7 @@ class Passagem extends persist{
   }
 
   public function fazEmbarque(Viagem $viagem){
-    $this->status[$viagem->getCodigoViagem()] = EnumStatus::EmbarqueRealizado;
+    $this->status[$viagem->getLinha()->getCodLinha()] = EnumStatus::EmbarqueRealizado;
   }
 
   public function fazNoShow(){
