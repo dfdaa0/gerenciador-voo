@@ -14,6 +14,7 @@ class Linha extends persist{
     static private $filename = 'linha.txt';
 
     public function __construct(string $origem, string $destino, DateTime $horarioPartida, int $duracaoEstimada, string $codLinha, Aeronave $aeronave, CiaAerea $proprietaria) {
+          $this->proprietaria = $proprietaria;    
           $this->origem = $origem;
           $this->destino = $destino;
           $this->horarioPartida = $horarioPartida;
@@ -22,7 +23,6 @@ class Linha extends persist{
                   $this->codLinha = $codLinha;
           }
           $this->aeronave = $aeronave;
-          $this->proprietaria = $proprietaria;
       }
   
     static public function getFilename(){
@@ -75,13 +75,13 @@ class Linha extends persist{
       }
       $prefixo = substr($codLinha, 0, 2);
       $sufixo = substr($codLinha, 2, 4);
-      //checa se os dígitos iniciais são letras
-      if (!ctype_alpha($prefixo)) {
-        return false;
+      //checa se os dígitos iniciais são letras e os finais são números
+      if (!ctype_alpha($prefixo) || !ctype_digit($sufixo)) {
+        throw new exception("Formato de código de linha errado");
     }     
-      //checa se os dígitos finais são números
-      if (!ctype_digit($sufixo)) {
-        return false;
+      //checa se os dígitos iniciais são iguais à sigla
+      if ($prefixo != $this->proprietaria->getSigla()) {
+        throw new exception("Código de linha com prefixo diferente do esperado");
     }     
   return true;
 }
