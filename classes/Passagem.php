@@ -15,11 +15,12 @@ class Passagem extends persist{
     return get_called_class()::$filename;
   }
  
-  Public Function __construct(Passageiro $passageiro, Aeroporto $origem, Aeroporto $destino, Array $viagens, String $codBarras, Array $franquias){
+  Public Function __construct(Passageiro $passageiro, Array $viagens, String $codBarras, Array $franquias){
+    $this->viagens = $viagens;
     $this->geraStatus($viagens);
     $this->passageiro = $passageiro;
-    $this->origem = $origem;
-    $this->destino = $destino;
+    $this->origem = $this->viagens[0]->getLinha()->getOrigem();
+    $this->destino = $this->viagens[count($viagens)-1]->getLinha()->getDestino();
     $this->viagens = $viagens;
     $this->codBarras = $codBarras;
     if($this->checaFranquias($franquias)){
@@ -70,20 +71,24 @@ class Passagem extends persist{
   private function geraStatus(array $viagens){
     
     for ($i=0; $i < count($viagens); $i++) { 
-      $this->status[$viagens[$i]->getCodigoViagem()] = EnumStatus::PassagemAdquirida;
+      $this->status[$viagens[$i]->getLinha()->getCodLinha()] = EnumStatus::PassagemAdquirida;
     }
     
   }
 
   public function fazCheckIn(){
-    for ($i=0; $i < count($this->status); $i++) {
-    $this->status[$i] = EnumStatus::CheckinRealizado;
+    $n = count($this->status);
+    for ($i=0; $i < $n; $i++) {
+      $codigo = $this->viagens[$i]->getLinha()->getCodLinha(); 
+      $this->status[$codigo] = EnumStatus::CheckinRealizado;
     }
   }
 
   public function cancelaPassagem(){
-    for ($i=0; $i < count($this->status); $i++) { 
-      $this->status[$i] = EnumStatus::PassagemCancelada;
+    $n = count($this->status);
+    for ($i=0; $i < $n; $i++) {
+      $codigo = $this->viagens[$i]->getLinha()->getCodLinha(); 
+      $this->status[$codigo] = EnumStatus::PassagemCancelada;
     }
     
   }
@@ -93,8 +98,10 @@ class Passagem extends persist{
   }
 
   public function fazNoShow(){
-    for ($i=0; $i < count($this->status); $i++) { 
-      $this->status[$i] = EnumStatus::NoShow;
+    $n = count($this->status);
+    for ($i=0; $i < $n; $i++) { 
+      $codigo = $this->viagens[$i]->getLinha()->getCodLinha(); 
+      $this->status[$codigo] = EnumStatus::NoShow;
     }
   }
 

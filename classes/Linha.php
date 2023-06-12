@@ -1,10 +1,10 @@
-<?php
+<<?php
 declare(strict_types=1);
 include_once('Persiste.php');
 class Linha extends persist{
 
-    private string $origem;
-    private string $destino;
+    private Aeroporto $origem;
+    private Aeroporto $destino;
     private DateTime $horarioPartida;
     private array $frequencia;
     private int $duracaoEstimada;
@@ -13,7 +13,7 @@ class Linha extends persist{
     private ciaAerea $proprietaria;
     static private $filename = 'linha.txt';
 
-    public function __construct(string $origem, string $destino, DateTime $horarioPartida, int $duracaoEstimada, string $codLinha, Aeronave $aeronave, CiaAerea $proprietaria) {
+    public function __construct(Aeroporto $origem, Aeroporto $destino, DateTime $horarioPartida, int $duracaoEstimada, string $codLinha, Aeronave $aeronave, CiaAerea $proprietaria) {
           $this->proprietaria = $proprietaria;    
           $this->origem = $origem;
           $this->destino = $destino;
