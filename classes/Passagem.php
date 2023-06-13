@@ -8,19 +8,19 @@ class Passagem extends persist{
   private Array $viagens;
   private Array $status;
   private String $codBarras;
-  private Int $franquias;
-  //franquias só podem ter no máximo 23kg cada. Falta implementar isso
+  private Array $franquias;
   static private $filename = 'passagem.txt';
   
   static public function getFilename(){
     return get_called_class()::$filename;
   }
  
-  Public Function __construct(Passageiro $passageiro, Aeroporto $origem, Aeroporto $destino, Array $viagens, String $codBarras, Int $franquias){
+  Public Function __construct(Passageiro $passageiro, Array $viagens, String $codBarras, Array $franquias){
+    $this->viagens = $viagens;
     $this->geraStatus($viagens);
     $this->passageiro = $passageiro;
-    $this->origem = $origem;
-    $this->destino = $destino;
+    $this->origem = $this->viagens[0]->getLinha()->getOrigem();
+    $this->destino = $this->viagens[count($viagens)-1]->getLinha()->getDestino();
     $this->viagens = $viagens;
     $this->codBarras = $codBarras;
     if($this->checaFranquias($franquias)){
@@ -56,9 +56,14 @@ class Passagem extends persist{
     return $this->franquias;
   }
 
-  Private Function checaFranquias(int $franquias){
-    if($franquias > 3 || $franquias < 0){
-      return false;
+  Private Function checaFranquias(Array $franquias){
+    if(count($franquias) > 3 || count($franquias) < 0){
+      throw new Exception('Número de franquias inválido');
+    }
+    for ($i=0; $i < count($franquias); $i++) { 
+      if($franquias[$i] > 23 || $franquias[$i] < 0){
+        throw new Exception('Peso de franquias inválido');
+      }
     }
     return true;
   }
@@ -66,31 +71,37 @@ class Passagem extends persist{
   private function geraStatus(array $viagens){
     
     for ($i=0; $i < count($viagens); $i++) { 
-      $this->status[$viagens[$i]->getCodigoViagem()] = EnumStatus::PassagemAdquirida;
+      $this->status[$viagens[$i]->getLinha()->getCodLinha()] = EnumStatus::PassagemAdquirida;
     }
     
   }
 
-  public function fazCheckIn(Viagem $viagem){
-    for ($i=0; $i < count($this->status); $i++) {
-      $this->status[$i] = EnumStatus::CheckinRealizado;
+  public function fazCheckIn(){
+    $n = count($this->status);
+    for ($i=0; $i < $n; $i++) {
+      $codigo = $this->viagens[$i]->getLinha()->getCodLinha(); 
+      $this->status[$codigo] = EnumStatus::CheckinRealizado;
     }
   }
 
   public function cancelaPassagem(){
-    for ($i=0; $i < count($this->status); $i++) { 
-      $this->status[$i] = EnumStatus::PassagemCancelada;
+    $n = count($this->status);
+    for ($i=0; $i < $n; $i++) {
+      $codigo = $this->viagens[$i]->getLinha()->getCodLinha(); 
+      $this->status[$codigo] = EnumStatus::PassagemCancelada;
     }
     
   }
 
   public function fazEmbarque(Viagem $viagem){
-    $this->status[$viagem->getCodigoViagem()] = EnumStatus::EmbarqueRealizado;
+    $this->status[$viagem->getLinha()->getCodLinha()] = EnumStatus::EmbarqueRealizado;
   }
 
   public function fazNoShow(){
-    for ($i=0; $i < count($this->status); $i++) { 
-      $this->status[$i] = EnumStatus::NoShow;
+    $n = count($this->status);
+    for ($i=0; $i < $n; $i++) { 
+      $codigo = $this->viagens[$i]->getLinha()->getCodLinha(); 
+      $this->status[$codigo] = EnumStatus::NoShow;
     }
   }
 

@@ -5,9 +5,9 @@ class Pontos extends persist{
 	  private int $valor;
 	  private DateTime $dataExpiracao;
 	  static private $filename = 'Pontos.txt';
-	  public function __construct(int $valor, DateTime $dataExpiracao){
+	  public function __construct(int $valor){
 		    $this->valor = $valor;
-		    $this->dataExpiracao = $dataExpiracao;
+			$this->setDataExpiracao();
 	  }
 	  static public function getFilename(){
 	    	return get_called_class()::$filename;
@@ -17,6 +17,12 @@ class Pontos extends persist{
 	  }
 	  public function getDataExpiracao(){
 	    	return $this->dataExpiracao;
+	  }
+
+	  private function setDataExpiracao(){
+		$this->dataExpiracao = date_create();
+		$intervalo = new DateInterval('P1Y0M0D');
+		$this->dataExpiracao->add($intervalo);
 	  }
 }
 ?>
