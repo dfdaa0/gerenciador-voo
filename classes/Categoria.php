@@ -6,7 +6,7 @@ class Categoria extends persist{
 	  private int $pontuacaoMinima;
 	  static private $filename = 'Categoria.txt';
 	  public function __construct(string $nome, int $pontuacaoMinima){
-		    $this->cliente = $nome;
+		    $this->nome = $nome;
 		    $this->pontuacaoMinima = $pontuacaoMinima;
 	  }
 	  static public function getFilename(){
@@ -18,13 +18,5 @@ class Categoria extends persist{
 	  public function getPontuacaoMinima(){
 	    	return $this->pontuacaoMinima;
 	  }
-  	  public function setNome(string nome){
-	    	$this->nome = nome;
-        $this->nome
-	  }
-	  public function setPontuacaoMinima(int pontuacaoMinima){
-	    	$this->pontuacaoMinima = pontuacaoMinima;
-      return $this->pontuacaoMinima
-	  }
-}?
+}
 ?>
