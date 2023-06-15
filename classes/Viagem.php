@@ -112,4 +112,8 @@ class Viagem extends persist{
     }
   }
 
+  public function setValorMin(int $valorMin){
+    $this->valorMin = $valorMin;
+  }
+
 }

@@ -6,9 +6,9 @@ class LogLeitura extends Log{
     private string $informacaoAcessada;
     static private $filename = 'logLeitura.txt';
 
-    public function __construct($entidadeAcessada, $informacaoAcessada){
+    public function __construct($entidadeAcessada, $atributoAcessado){
         $this->entidadeAcessada = $entidadeAcessada;
-        $this->informacaoAcessada = $informacaoAcessada;
+        $this->atributoAcessado = $atributoAcessado;
     }
 
     static public function getFilename(){
@@ -19,8 +19,8 @@ class LogLeitura extends Log{
         return $this->entidadeAcessada;
     }
 
-    public function getInformacaoAcessada(){
-        return $this->informacaoAcessada;
+    public function getAtributoAcessado(){
+        return $this->atributoAcessado;
     }
         
     }
