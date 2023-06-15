@@ -28,4 +28,6 @@ class Usuario extends persist{
     public function getEmail(){
         return $this->email;
     }
+
+    
 }
