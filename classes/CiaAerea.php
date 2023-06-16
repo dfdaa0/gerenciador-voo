@@ -8,7 +8,7 @@ class CiaAerea extends persist{
     private string $cnpj;
     private string $sigla;
     private float $precoBagagem;
-    private array $veiculos;
+    private array $veiculos = [];
     static private $filename = 'cia.txt';
     
     public function __construct(int $codigo, string $nome, string $razaoSocial, string $cnpj, string $sigla, float $precoBagagem) {
@@ -70,6 +70,10 @@ class CiaAerea extends persist{
         throw new Exception("Preço da bagagem deve ser maior que 0.");
       }
       $this->precoBagagem = $precoBagagem;
+    }
+
+    public function addVeiculo(Veiculo $veiculo){
+      array_push($this->veiculos, $veiculo);
     }
 
 }
