@@ -24,9 +24,16 @@ O sistema foi desenvolvido em formato de sprints, onde cada semana uma nova dema
 
 #### Tecnologias utilizadas
 - PHP
-- ~~MySQL~~ ToDo
-- ~~HTML~~ ToDo
-- ~~CSS~~ ToDo
+- Composer
+- PHPUnit
 
-Como executar
-Para executar o sistema, é necessário clonar o repositório e configurar o ambiente de acordo com as tecnologias utilizadas.
+### Primeiros Passos
+
+Executar o comando:
+
+``composer install``
+
+Para baixar as bibliotecas e dependências do projeto.
+### Como executar os testes unitários
+
+``/vendor/bin/phpunit --verbose tests``
