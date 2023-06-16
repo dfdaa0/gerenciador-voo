@@ -9,13 +9,14 @@ class Passagem extends persist{
   private Array $status;
   private String $codBarras;
   private Array $franquias;
+  private float $valorMulta;
   static private $filename = 'passagem.txt';
   
   static public function getFilename(){
     return get_called_class()::$filename;
   }
  
-  Public Function __construct(Passageiro $passageiro, Array $viagens, String $codBarras, Array $franquias){
+  Public Function __construct(Passageiro $passageiro, Array $viagens, String $codBarras, Array $franquias, float $valorMulta){
     $this->viagens = $viagens;
     $this->geraStatus($viagens);
     $this->passageiro = $passageiro;
@@ -26,6 +27,7 @@ class Passagem extends persist{
     if($this->checaFranquias($franquias)){
       $this->franquias = $franquias;
     }
+    $this->valorMulta = valorMulta;
   }
 
   Public Function getPassageiro(){
