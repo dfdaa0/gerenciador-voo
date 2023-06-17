@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 include_once('Persiste.php');
+include_once('classes/Pessoa.php');
+
 class Passageiro extends Pessoa{
   protected Array $passagens;
   static private $filename = 'passageiro.txt';
