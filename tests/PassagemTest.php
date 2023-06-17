@@ -13,10 +13,7 @@ final class PassagemTest extends TestCase{
     private Aeroporto $aeroporto1;
     private Aeroporto $aeroporto2;
     private Array $viagens;
-    private Array $status;
-    private String $codBarras;
     private Array $franquias;
-    private float $valorMulta;
 
     public function initializeClass(){
         $endereco = new Endereco("logradouro", 91, "complemento", "bairro", "cidade", "estado", "22222-909", 2.5, 25.4);
@@ -64,6 +61,7 @@ final class PassagemTest extends TestCase{
         $this->assertSame($this->passagem->getStatus()[$this->passagem->getViagens()[0]->getLinha()->getCodLinha()], EnumStatus::PassagemAdquirida);
         $this->assertSame($this->passagem->getCodBarras(), "codBarras");
         $this->assertSame($this->passagem->getFranquias(), $this->franquias);
+        $this->assertSame($this->passagem->getValorMulta(), 200.0);
     }
 
     public function testMudancaStatus(){

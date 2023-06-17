@@ -27,7 +27,7 @@ class Passagem extends persist{
     if($this->checaFranquias($franquias)){
       $this->franquias = $franquias;
     }
-    $this->valorMulta = valorMulta;
+    $this->valorMulta = $valorMulta;
   }
 
   Public Function getPassageiro(){
@@ -107,7 +107,9 @@ class Passagem extends persist{
     }
   }
 
-  
+  public function getValorMulta(){
+    return $this->valorMulta;
+  }
   
 
 }
