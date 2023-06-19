@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
-  enum EnumStatus: int {
-    case PassagemAdquirida = 0;
-    case PassagemCancelada = 1;
-    case CheckinRealizado = 3;
-    case EmbarqueRealizado = 4;
-    case NoShow = 5;
-  }
+
+class EnumStatus {
+    public static $PassagemAdquirida = 0;
+    public static $PassagemCancelada = 1;
+    public static $CheckinRealizado = 3;
+    public static $EmbarqueRealizado = 4;
+    public static $NoShow = 5;
+}
 ?>
