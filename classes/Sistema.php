@@ -52,7 +52,7 @@ class Sistema extends persist{
           return;
         }
         $cia = new CiaAerea($codigo,$nome,$razao, $cnpj,$sigla, $precoBagagem);
-        $cia->save();
+        // $cia->save();
       echo "Companhia " . $nome . " cadastrada com sucesso!\n";
       return $cia;
     }
@@ -66,7 +66,7 @@ class Sistema extends persist{
             return;
           }
           $aeronave = new Aeronave($fabicante,$modelo,$passageiros,$ciaAerea,$carga,$sigla);
-          $aeronave->save();
+          // $aeronave->save();
           echo "Aeronave cadastrada com sucesso!\n";
           return $aeronave;
       }
@@ -80,7 +80,7 @@ class Sistema extends persist{
           return;
         }
         $aeroporto = new Aeroporto($sigla,$cidade,$estado);
-        $aeroporto->save();
+        // $aeroporto->save();
         echo "Aeroporto " . $nome . " cadastrado com sucesso!\n";
         return $aeroporto;
     }
@@ -109,15 +109,14 @@ class Sistema extends persist{
                     . " cadastrado com sucesso!\n";
           
         }
-        $voo->save();
+        // $voo->save();
         return $voo;
     }
     catch (Exception $e) {
          echo "Erro: " . $e->getMessage() . "\n";
     }
   }
-  public function gerarViagens(){
-      $voos = Linha::getRecords();
+  public function gerarViagens($voos){
       $voosComFrequencia = $this->filtrarVoos($voos);
   
       foreach ($voosComFrequencia as $voo) {;
@@ -163,7 +162,7 @@ class Sistema extends persist{
     if($freq !== null){
           while ($voo->getHorarioPartida() < $trintaDiasDepois) {
             $viagem = new Viagem($voo,$voo->getAeronave(),$voo->getHorarioPartida());
-            $viagem->save();
+            // $viagem->save();
             $viagens[] = $viagem;
     
           echo "Viajem com saida de " . $voo->getOrigem()->getCidade() . " e destino a " 
@@ -177,7 +176,7 @@ class Sistema extends persist{
 
     } else{
       $viagem = new Viagem($voo,$voo->getAeronave(), $voo->getHorarioPartida());
-      $viagem->save();
+      // $viagem->save();
       echo "Viajem com saida de " . $voo->getOrigem()->getCidade() . " e destino a " .
         $voo->getDestino()->getCidade() . " cadastrada para o dia [" 
         . $voo->getHorarioPartida()->format('Y-m-d') .

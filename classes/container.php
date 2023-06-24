@@ -1,6 +1,5 @@
 <?php
-    declare(strict_types=1);
-//namespace Persist;
+    //namespace Persist;
     class container {
         private string $folder = 'dataFiles';
         private string $filename;
@@ -48,12 +47,7 @@
 
         public function editObject( $p_index, $p_obj ) {
             $this->objects[$p_index-1] = $p_obj;
-        }
-
-        // Deletes an object from objects array
-        public function deleteObject( $p_index ) {
-            // TO DO
-        }
+        }       
 
         public function getObjects () {
             $this->load();			

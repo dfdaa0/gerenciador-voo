@@ -3,14 +3,14 @@
 
 $sistema = new Sistema();
 
-$sistema->cadastraCompanhia('Latam','001', 'Latam Airlines do Brasil S.A.','LA');
+$sistema->cadastraCompanhia('Latam','001', 'Latam Airlines do Brasil S.A.','LA', '12.085.581/0001-90', 19.2);
 echo "\n";
 
 $sistema->login('admin','secretPass');
 echo "\n";
 
-$latam = $sistema->cadastraCompanhia('Latam','001', 'Latam Airlines do Brasil S.A.','LA');
-$azul = $sistema->cadastraCompanhia('Azul','002', 'Azul Linhas Aéreas Brasileiras S.A.','AD');
+$latam = $sistema->cadastraCompanhia('Latam','001', 'Latam Airlines do Brasil S.A.','LA', '12.085.581/0001-90', 19.2);
+$azul = $sistema->cadastraCompanhia('Azul','002', 'Azul Linhas Aéreas Brasileiras S.A.','AD', '12.085.581/0001-90', 19.2);
 
 echo "\n";
 
@@ -34,8 +34,11 @@ $vooAC1329 = $sistema->cadastraVoo($Confins,$Guarulhos,new DateTime("2021-05-10 
 
 echo "\n";
 
+$voos = array();
+
 $vooDiarioManha = $sistema->cadastraVoo($Confins,$Guarulhos,new DateTime("2022-06-06 08:00:00"), 40 ,"AD777",$aeronaveAzul,$azul,'diario');
-
+array_push($voos, $vooDiarioManha);
 $vooDiarioTarde = $sistema->cadastraVoo($Confins,$Guarulhos,new DateTime("2022-06-06 15:00:00"), 40 ,"AD000",$aeronaveAzul,$azul,'diario');
+array_push($voos, $vooDiarioTarde);
 
-$sistema->gerarViagens();
+$sistema->gerarViagens($voos);
