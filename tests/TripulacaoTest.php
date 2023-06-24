@@ -25,7 +25,7 @@ final class TripulacaoTest extends TestCase{
         $cht = '1234567890';
         $aeroporto = new Aeroporto('AAA', 'Aeroporto A', 'Cidade A', 'Estado A');
         $ciaAerea = new CiaAerea(
-            001,
+            "001",
             "Latam",
             "Latam Airlines do Brasil S.A",
             "00.000.000/0000-00",

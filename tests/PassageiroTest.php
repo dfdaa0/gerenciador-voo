@@ -35,7 +35,7 @@ final class PassageiroTest extends TestCase{
         
             $this->initializeClass();
             $ciaAerea = new CiaAerea(
-                001,
+                "001",
                 "Latam",
                 "Latam Airlines do Brasil S.A",
                 "00.000.000/0000-00",
@@ -54,8 +54,8 @@ final class PassageiroTest extends TestCase{
             $linha1 = new Linha($aeroporto1, $aeroporto3, $horarioPartida, 72, "LA2023" ,$aeronave1, $ciaAerea);
             $linha2 = new Linha($aeroporto3, $aeroporto2, $horarioPartida, 72, "LA2022" ,$aeronave1, $ciaAerea);
     
-            $viagem = new Viagem ($linha1, $aeronave1);
-            $viagem2 = new Viagem ($linha2, $aeronave1);
+            $viagem = new Viagem ($linha1, $aeronave1, $linha1->getHorarioPartida());
+            $viagem2 = new Viagem ($linha2, $aeronave1, $linha2->getHorarioPartida());
     
             $viagens[]= $viagem;
             $viagens[]= $viagem2;
@@ -71,7 +71,7 @@ final class PassageiroTest extends TestCase{
         
         $this->initializeClass();
         $ciaAerea = new CiaAerea(
-            001,
+            "001",
             "Latam",
             "Latam Airlines do Brasil S.A",
             "00.000.000/0000-00",
@@ -88,7 +88,7 @@ final class PassageiroTest extends TestCase{
 
         $linha1 = new Linha($aeroporto2, $aeroporto1, $horarioPartida, 72, "LA2023" ,$aeronave1, $ciaAerea);
 
-        $viagem = new Viagem ($linha1, $aeronave1);
+        $viagem = new Viagem ($linha1, $aeronave1, $linha1->getHorarioPartida());
 
         $viagens[]= $viagem;
 

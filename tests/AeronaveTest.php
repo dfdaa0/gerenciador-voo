@@ -10,7 +10,7 @@ final class AeronaveTest extends TestCase{
 
     public function initializeClass(){
         $ciaAerea = new CiaAerea(
-            001,
+            "001",
             "Latam",
             "Latam Airlines do Brasil S.A",
             "00.000.000/0000-00",
