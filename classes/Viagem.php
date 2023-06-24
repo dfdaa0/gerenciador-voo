@@ -1,42 +1,46 @@
 <?php
 declare(strict_types=1);
+
 include_once('Persiste.php');
 
 class Viagem extends persist{
-  private string $codigoViagem;
   private Linha $linha;
   private Aeronave $aeronave;
-  private Datetime $horaPartida;
-  private Datetime $horaChegada;
+  private? Datetime $horaPartida;
+  private? Datetime $horaChegada;
   private Array $vagas;
-  private float $valorMin;
+  private float $precoMin;
   private int $pontosViagem;
+  private bool $partidaOcorreu;
+  private bool $chegadaOcorreu;
   static private $filename = 'viagem.txt';
 
-  public function __construct(Linha $linha, Aeronave $aeronave, Datetime $horaPartida, Datetime $horaChegada, float $valorMin, int $pontosViagem) {
-    $this->linha = $linha;
+  public function __construct(Linha $linha, Aeronave $aeronave, $horaPartida) {
     $this->aeronave = $aeronave;
     $this->horaPartida = $horaPartida;
-    $this->horaChegada = $horaChegada;
-    $this->valorMin = $valorMin;
-    $this->pontosViagem = $pontosViagem;
-    createPontosViagem();
+    $this->setVagas();
+    $this->linha = $linha;
+    $this->partidaOcorreu = false;
+    $this->chegadaOcorreu = false;
+    $this->precoMin = 400;
+    $this->pontosViagem = 50;
   }
+
   static public function getFilename(){
     return get_called_class()::$filename;
   }
  
   public function getYear() {
-    return $this-> dataHora ->format ("Y");
+    return $this->linha->getHorarioPartida()->format ("Y");
   }
       
   public function getMonth() {
-    return $this->dataHora->format("m");
+    return $this->linha->getHorarioPartida()->format("m");
           
   }
 
   public function getDay() {
-    return $this-> dataHora ->format ("D");
+    return $this->linha->getHorarioPartida()->format ("d");
   }
   
   public function getLinha() {
@@ -48,59 +52,68 @@ class Viagem extends persist{
   }
 
   public function getHoraPartida() {
+    if($this->partidaOcorreu == false){
+      throw new Exception('Viagem não iniciou');
+    }
     return $this->horaPartida;
   }
 
   public function setHoraPartida(DateTime $horaPartida) {
-    $this->horaPartida = $horaPartida;
+    $this->horaPartida->setDate($horaPartida);
   }
 
   public function getHoraChegada() {
+    if($this->chegadaOcorreu == false){
+      throw new Exception('Viagem não terminou');
+    }
     return $this->horaChegada;
   }
 
   public function setHoraChegada(Datetime $horaChegada) {
     $this->horaChegada = $horaChegada;
+    $this->chegadaOcorreu = true;
   }
 
-  public function getCodigoViagem() {
-    return $this->codigoViagem;
-  }
-
-  private function setCodigoViagem(string $codigoViagem) {
-    if (strlen($codigoViagem) != 6 || !ctype_alpha(substr($codigoViagem, 0, 2)) || !ctype_digit(substr($codigoViagem, 2))) {
-      echo "Formatação incorreta. Exemplo: AA2222";
-      return false;
-    }
-    if (substr($codigoViagem, 0, 2) != $this->ciaAerea) {
-      echo "Sigla da Companhia Aérea não coincide";
-      return false;
-    }
-    else {
-      $this->codigoViagem = $codigoViagem;
-      return true;
-    }
-  }
-
-  public function getValorMin() {
-    return $this->pontosViagem;
-  }
-  
-  private function setValorMin(int $pontosViagem){
-    // implementar
+  public function getPrecoMin() {
+    return $this->precoMin;
   }
   
   public function getPontosViagem() {
     return $this->pontosViagem;
   }
-  
-  private function setPontosViagem(int $pontosViagem){
-    // implementar
+
+  private function setVagas(){
+    for ($i=0; $i < $this->aeronave->getCapacidadePassageiros(); $i++) { 
+      $this->vagas[$i] = true;
+    }
   }
 
+  public function compraVaga(int $i){
+    if($i < 0 || $i>=$this->aeronave->getCapacidadePassageiros()){
+      throw new exception("Vaga inexistente");
+    }
+    if($this->vagas[$i] == false){
+      throw new exception ("Vaga já está ocupada");
+    }
+    $this->vagas[$i] = false;
+  }
 
-  private function createPontosViagem(){
-    // implementar
-  };
+  public function getDisponibilidadeVaga(int $i){
+    if($i < 0 || $i>=$this->aeronave->getCapacidadePassageiros()){
+      throw new exception("Vaga inexistente");
+    }
+
+    if($this->vagas[$i] == true){
+      return "Vaga disponível";
+    }
+
+    else{
+      return "Vaga indisponível";
+    }
+  }
+
+  public function setPrecoMin(float $precoMin){
+    $this->precoMin = $precoMin;
+  }
 
 }

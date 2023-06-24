@@ -8,7 +8,7 @@ class Aeroporto extends persist{
   static private $filename = 'aeroporto.txt';
   
   public function __construct(string $sigla, string $cidade, string $estado) {
-    $this->sigla = $sigla;
+    $this->setSigla($sigla);
     $this->cidade = $cidade;
     $this->estado = $estado;
   }
@@ -20,7 +20,11 @@ class Aeroporto extends persist{
     return $this->sigla;
   }
 
-  public function setSigla($sigla) {
+  private function setSigla($sigla) {
+    $pattern = "/^[A-Z]{3}$/";
+    if (!preg_match($pattern, $sigla)){
+      throw new Exception('Sigla inválida. Formato esperado: AAA');
+    }
     $this->sigla = $sigla;
   }
 

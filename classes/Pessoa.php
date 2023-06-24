@@ -7,20 +7,21 @@ class Pessoa extends persist{
     protected string $passaporte;
     protected string $cpf;
     protected string $nacionalidade;
-    protected string $nascimento;
+    protected DateTime $nascimento;
     protected string $email;
     protected Endereco $endereco;
     static private $filename = 'pessoa.txt';
   
 
-    public function __construct($nome, $rg, $passaporte, $cpf, $nacionalidade, $nascimento, $email, $endereco) {
+    public function __construct(string $nome, string $rg, string $passaporte, string $cpf,
+      string $nacionalidade, string $nascimento, string $email, Endereco $endereco) {
         $this->nome = $nome;
-        setRg($rg);
-        setPassaporte($passaporte);
-        setCpf($cpf);
-        setNacionalidade($nacionalidade);
-        setNascimento($nascimento);
-        setEmail($email);
+        $this->setRg($rg);
+        $this->setPassaporte($passaporte);
+        $this->setCpf($cpf);
+        $this->nacionalidade = $nacionalidade;
+        $this->setNascimento($nascimento);
+        $this->setEmail($email);
 		    $this->endereco = $endereco;
     }
 
@@ -50,7 +51,7 @@ class Pessoa extends persist{
     }
 
     private function setPassaporte(string $passaporte) {
-        $pattern = "/^[A-Z]{2}\d{7}$/";
+        $pattern = "/^[A-Z]{2}\d{6}$/";
         $passaporte = strtoupper($passaporte);
         if (preg_match($pattern, $passaporte) != 1){
             throw new Exception('Passaporte inválido');
@@ -77,11 +78,11 @@ class Pessoa extends persist{
 
     private function setNascimento(string $nascimento) {
       $pattern = "/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/";
-      $nascimento = stringtoupper($nascimento);
+      $nascimento = strtoupper($nascimento);
       if (preg_match($pattern, $nascimento) != 1){
         throw new Exception('Data inválida');
       }
-      $this->$nascimento = $nascimento;
+      $this->nascimento = DateTime::createFromFormat('d/m/Y', $nascimento);
     }
   
     public function getEmail() {
@@ -90,15 +91,19 @@ class Pessoa extends persist{
   
     private function setEmail(string $email) {
       $pattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
-      $email = stringtoupper($email);
+      $email = strtoupper($email);
       if (preg_match($pattern, $email) != 1){
         throw new Exception('Email inválido');
       }
-      $this->$email = $email;
+      $this->email = $email;
   }
 
     public function getNascimento() {
     return $this->nascimento;
+  }
+
+  public function getEndereco(){
+    return $this->endereco;
   }
 
 }
