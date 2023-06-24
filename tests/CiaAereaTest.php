@@ -7,7 +7,7 @@ final class CiaAereaTest extends TestCase{
     private CiaAerea $ciaAerea;
     public function initialize(){
       $this->ciaAerea = new CiaAerea(
-      001,
+      "001",
       "Latam",
       "Latam Airlines do Brasil S.A",
       "00.000.000/0000-00",
@@ -17,7 +17,7 @@ final class CiaAereaTest extends TestCase{
     }
     public function testClassConstructor(){
         $this->initialize();
-        $this->assertSame(001, $this->ciaAerea->getCodigo());
+        $this->assertSame("001", $this->ciaAerea->getCodigo());
         $this->assertSame("Latam", $this->ciaAerea->getNome());
         $this->assertSame("Latam Airlines do Brasil S.A", $this->ciaAerea->getRazaoSocial());
         $this->assertSame("00.000.000/0000-00", $this->ciaAerea->getCnpj());

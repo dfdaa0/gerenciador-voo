@@ -18,7 +18,7 @@ final class ViagemTest extends TestCase{
 
     public function initializeClass(){
         $this->ciaAerea = new CiaAerea(
-            001,
+            "001",
             "Latam",
             "Latam Airlines do Brasil S.A",
             "00.000.000/0000-00",
@@ -37,7 +37,7 @@ final class ViagemTest extends TestCase{
         $this->linha1 = new Linha($this->aeroporto1, $this->aeroporto2,
          $this->horarioPartida, 72, "LA2023" ,$this->aeronave1, $this->ciaAerea);
 
-        $this->viagem = new Viagem ($this->linha1, $this->aeronave1);
+        $this->viagem = new Viagem ($this->linha1, $this->aeronave1, $this->linha1->getHorarioPartida());
        
     }
 
