@@ -185,5 +185,34 @@ class Sistema extends persist{
 
   }
 
+  public function compraPassagem(Passageiro $passageiro,Viagem $viagens, String $codBarras, Array $franquias, float $valorMulta, Cliente $cliente){
+    try{      
+      if(!$this->verificaAutenticacao()){
+        return;
+      }
+      $passagem = new Passagem($passageiro, $viagens, $codBarras, $franquias, $valorMulta);
+      echo "Passagem comprada pelo cliente ". $cliente->getNome() . " para o passageiro ". $passageiro->getNome() .". ";
+      echo "Origem: ". $passagem->getOrigem()->getCidade(). ". Destino: ". $passagem->getDestino()->getCidade();
+      return $passagem;
+  }
+  catch (Exception $e) {
+       echo "Erro: " . $e->getMessage();
+  }
+  }
+
+  public function geraCartaoEmbarque(string $nome, Aeroporto $origem, Aeroporto $destino, DateTime $horarioViagem, int $assento){
+    $cartaoEmbarque = new CartaoEmbarque($nome, $origem, $destino, $horarioViagem, $assento);
+    echo "\nImprimindo cartão de embarque\n". "Nome do passageiro: ". $nome."\n";
+    echo "Origem: ". $origem->getCidade(). "\n Destino: ". "\n". $destino->getCidade();
+    echo "\nHorário: ". $horarioViagem->format("H:i"). "\nAssento: ". $assento;
+  }
+
+
+
+
+
+
+
+
 }
 
