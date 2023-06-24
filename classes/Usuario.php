@@ -5,7 +5,7 @@ class Usuario extends persist{
     private string $login;
     private string $email;
     private string $senha;
-    static private $filename = 'veiculo.txt';
+    static private $filename = 'usuario.txt';
 
     public function __construct(string $login, string $email, string $senha){
         $this->login = $login;
