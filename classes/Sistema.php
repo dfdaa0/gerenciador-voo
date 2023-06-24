@@ -1,8 +1,6 @@
 <?php
 declare(strict_types=1);
-include_once('Usuario.php');
-include_once('CiaAerea.php');
-include_once('Aeronave.php');
+include_once('Persiste.php');
 
 class Sistema extends persist{
   private $usuarios = array();
@@ -12,7 +10,7 @@ class Sistema extends persist{
   public function __construct(){
     $login = "admin";
     $senha = "secretPass";
-    $email = "";
+    $email = "admin@gmail.com";
     $admin = new Usuario($login,$email,$senha);
     $this->usuarios[] = $admin;
   }
@@ -41,19 +39,19 @@ class Sistema extends persist{
 
     throw new Exception("Login ou senha incorretos.\n");
 }
-  function verificaAutenticacao(){
+  private function verificaAutenticacao(){
     if(!$this->autenticado){
-      throw new Exception("Realize login no sistema antes de realizar qualquer operacao\n");
+      throw new Exception("realize login no sistema antes de realizar qualquer operacao\n");
     }
-    return $this->autenticado;
+    return true;
   }
 
-  function cadastraCompanhia($nome, $codigo, $razao, $sigla){
+  public function cadastraCompanhia(string $nome, string $codigo, string $razao, string $sigla, string $cnpj, float $precoBagagem){
     try{      
         if(!$this->verificaAutenticacao()){
           return;
         }
-        $cia = new CiaAerea($codigo,$nome,$razao,'12.085.581/0001-90',$sigla,1);
+        $cia = new CiaAerea($codigo,$nome,$razao, $cnpj,$sigla, $precoBagagem);
         $cia->save();
       echo "Companhia " . $nome . " cadastrada com sucesso!\n";
       return $cia;
@@ -62,7 +60,7 @@ class Sistema extends persist{
          echo "Erro: " . $e->getMessage();
     }
   }
-  function cadastraAeronave($modelo, $fabicante, $passageiros, $carga, $ciaAerea,$sigla){
+  public function cadastraAeronave($modelo, $fabicante, $passageiros, $carga, $ciaAerea,$sigla){
     try{      
           if(!$this->verificaAutenticacao()){
             return;
@@ -76,7 +74,7 @@ class Sistema extends persist{
          echo "Erro: " . $e->getMessage() . "\n";
     }
   }
-  function cadastraAeroporto(string $sigla, string $cidade, string $estado, string $nome){
+  public function cadastraAeroporto(string $sigla, string $cidade, string $estado, string $nome){
     try{      
         if(!$this->verificaAutenticacao()){
           return;
@@ -90,7 +88,7 @@ class Sistema extends persist{
          echo "Erro: " . $e->getMessage();
     }
   }
-  function cadastraVoo(Aeroporto $origem, Aeroporto $destino, DateTime $horarioPartida, 
+  public function cadastraVoo(Aeroporto $origem, Aeroporto $destino, DateTime $horarioPartida, 
                        int $duracaoEstimada, string $codLinha, Aeronave $aeronave, 
                        CiaAerea $proprietaria, string $frequencia = null){
     try{      
@@ -118,7 +116,7 @@ class Sistema extends persist{
          echo "Erro: " . $e->getMessage() . "\n";
     }
   }
-  function gerarViagens(){
+  public function gerarViagens(){
       $voos = Linha::getRecords();
       $voosComFrequencia = $this->filtrarVoos($voos);
   
@@ -137,7 +135,7 @@ class Sistema extends persist{
       }
   }
 
-  function filtrarVoos($voos): array {
+  public function filtrarVoos($voos): array {
       $hoje = new DateTime();
       $trintaDiasDepois = (new DateTime())->modify('+30 days');
   
@@ -152,7 +150,7 @@ class Sistema extends persist{
   
       return $voosFiltrados;
   }
-  function agendarViagem($voo,$freq = null) {
+  public function agendarViagem($voo,$freq = null) {
     $viagens = array();
     $trintaDiasDepois = (new DateTime())->modify('+30 days');
     $hoje = new DateTime();
@@ -178,7 +176,7 @@ class Sistema extends persist{
       }
 
     } else{
-      $viagem = new Viagem($voo,$voo->getAeronave());
+      $viagem = new Viagem($voo,$voo->getAeronave(), $voo->getHorarioPartida());
       $viagem->save();
       echo "Viajem com saida de " . $voo->getOrigem()->getCidade() . " e destino a " .
         $voo->getDestino()->getCidade() . " cadastrada para o dia [" 
