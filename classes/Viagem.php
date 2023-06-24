@@ -11,7 +11,6 @@ class Viagem extends persist{
   private Array $vagas;
   private float $precoMin;
   private int $pontosViagem;
-  private bool $partidaOcorreu;
   private bool $chegadaOcorreu;
   static private $filename = 'viagem.txt';
 
@@ -20,7 +19,6 @@ class Viagem extends persist{
     $this->horaPartida = $horaPartida;
     $this->setVagas();
     $this->linha = $linha;
-    $this->partidaOcorreu = false;
     $this->chegadaOcorreu = false;
     $this->precoMin = 400;
     $this->pontosViagem = 50;
@@ -52,14 +50,11 @@ class Viagem extends persist{
   }
 
   public function getHoraPartida() {
-    if($this->partidaOcorreu == false){
-      throw new Exception('Viagem não iniciou');
-    }
     return $this->horaPartida;
   }
 
   public function setHoraPartida(DateTime $horaPartida) {
-    $this->horaPartida->setDate($horaPartida);
+    $this->horaPartida = $horaPartida;
   }
 
   public function getHoraChegada() {
