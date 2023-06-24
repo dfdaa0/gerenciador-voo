@@ -1,20 +1,20 @@
 <?php    
-
+    include_once('container.php');
     abstract class persist {
         private ?string $filename;
         private ?int $index = null; 
-      
-        public function __construct() {        
+        public function __construct() {    
+            echo "\nConstrutor de Persist chamado";    
             if (func_num_args()==1) {
                 $this->filename = func_get_arg(0);	                		
-			      }  
+			}  
             else if (func_num_args()==2) {
                 $this->filename = func_get_arg(0);	
                 $this->index = func_get_arg(1);              
-			      }            
+			}             
 			else {
-				throw( new Exception('Erro ao instanciar objeto da classe Persist - Número de parâmetros incorreto.'));
-           }
+				throw( new Exception('Eror ao instanciar objeto da classe Persist - Número de parâmetros incorreto.'));
+            }
         }
 
         public function __destruct() {
@@ -55,7 +55,7 @@
             $objs = $container->getObjects();  
             $matchObjects = array();         
             for ( $i=0; $i<count($objs); $i++) {
-                if ( $objs[$i]->$p_field == $p_value ) {                   
+                if ( $objs[$i]->get( $p_field ) == $p_value ) {                   
                     array_push( $matchObjects, $objs[$i] );
                 }               
             }
@@ -79,6 +79,10 @@
         public function __toString()
         {
             return print_r($this);
+        }
+
+        public function get( $p_field ) {
+            return $this->$p_field;
         }
 
         abstract static public function getFilename();
