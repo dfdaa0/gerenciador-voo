@@ -19,7 +19,7 @@ final class PassagemTest extends TestCase{
         $endereco = new Endereco("logradouro", 91, "complemento", "bairro", "cidade", "estado", "22222-909", 2.5, 25.4);
         $this->passageiro = new Passageiro("Francesco", "00.000.000-0", "CS265436", "000.000.000-00","Brasileiro", "12/12/2012", "aaaaa@gmail.com", $endereco);
         $ciaAerea = new CiaAerea(
-            001,
+            "001",
             "Latam",
             "Latam Airlines do Brasil S.A",
             "00.000.000/0000-00",
@@ -38,8 +38,8 @@ final class PassagemTest extends TestCase{
         $linha1 = new Linha($this->aeroporto1, $aeroporto3, $horarioPartida, 72, "LA2023" ,$aeronave1, $ciaAerea);
         $linha2 = new Linha($aeroporto3, $this->aeroporto2, $horarioPartida, 72, "LA2022" ,$aeronave1, $ciaAerea);
 
-        $viagem = new Viagem ($linha1, $aeronave1);
-        $viagem2 = new Viagem ($linha2, $aeronave1);
+        $viagem = new Viagem ($linha1, $aeronave1, $linha1->getHorarioPartida());
+        $viagem2 = new Viagem ($linha2, $aeronave1, $linha2->getHorarioPartida());
 
         $this->viagens[]= $viagem;
         $this->viagens[]= $viagem2;
