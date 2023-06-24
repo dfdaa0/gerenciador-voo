@@ -36,4 +36,4 @@ Executar o comando:
 Para baixar as bibliotecas e dependências do projeto.
 ### Como executar os testes unitários
 
-``/vendor/bin/phpunit --verbose tests``
+``./vendor/bin/phpunit --verbose tests``

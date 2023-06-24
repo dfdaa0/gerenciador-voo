@@ -1,33 +1,41 @@
 <?php
-  // include_once('global.php');
+  include_once('global.php');
 
-  // $ciaAerea = new CiaAerea('Teste', '1b', 'Testando', 'CN', 3);
-  // $ciaAerea->save();
-  // //var_dump($ciaAerea);
+$sistema = new Sistema();
 
-  // $aeronave = new Aeronave('fabricante', 'modelo', 3, 0, 'PT-RAE', $ciaAerea);
-  // $aeronave->save();
-  // // var_dump($aeronaveT);
+$sistema->cadastraCompanhia('Latam','001', 'Latam Airlines do Brasil S.A.','LA');
+echo "\n";
 
-  // $nomeDaCia = $aeronaveT->ciaAerea->getNome();
-  // echo $nomeDaCia;
+$sistema->login('admin','secretPass');
+echo "\n";
 
-//   $aeroporto = new Aeroporto('POO','Sarzedo','Bahia');
-//   $aeroporto->save();
+$latam = $sistema->cadastraCompanhia('Latam','001', 'Latam Airlines do Brasil S.A.','LA');
+$azul = $sistema->cadastraCompanhia('Azul','002', 'Azul Linhas Aéreas Brasileiras S.A.','AD');
 
+echo "\n";
 
-//   $agora = date('Y-m-d H:i:s');
-//   $linha = new Linha('Sarzedo', 'Belo Horizonte',$agora,$agora,'0123',$aeronave,$ciaAerea);
-//   $linha->save();
+$sistema->cadastraAeronave('175','Embraer',180,600,$latam,'PX-RUZ');
+$aeronaveLatam = $sistema->cadastraAeronave('175','Embraer',180,600,$latam,'PP-RUZ');
+$aeronaveAzul = $sistema->cadastraAeronave('175','Embraer',180,600,$azul,'PP-RUZ');
 
-//   $viagem = new Viagem($linha, $aeronave-> getModelo(), $agora, $agora, $agora, 'PT-RAE222', $ciaAerea->getSigla());
-//   $viagem->save();
-//   // $cliente = new Cliente('Israel', 'Jhonatas', 'meu RG', 123);
-//   // $cliente->save();
-//   $pessoa = new Pessoa('Israel','RG','Passporte','124', 'Brasileiro','24/04/1996','ij@gmail.com','Joao Pinheiro', 363, 'Brasília','32450000','Sarzedo','MG');
-// $pessoa->save();
+echo "\n";
 
-//   $passageiro = new Passageiro($pessoa);
-//   $passageiro->save();
+$Confins = $sistema->cadastraAeroporto('CNF','Confins','Minas Gerais', 'Confins');
+$Guarulhos = $sistema->cadastraAeroporto('GRU','Guarulhos','São Paulo','Guarulhos');
+$Congonhas = $sistema->cadastraAeroporto('CGH','São Paulo','São Paulo', 'Congonhas');
+$Galeão = $sistema->cadastraAeroporto('GIG','Rio de Janeiro','Rio de Janeiro', 'Galeão');
+$AfonsoPena = $sistema->cadastraAeroporto('CWB','São Jose dos Pinhais','Parana', 'Afonso Pena');
 
-//  echo $passageiro->pessoa->getNome();
+echo "\n";
+
+$vooAC1329 = $sistema->cadastraVoo($Confins,$Guarulhos,new DateTime("2021-05-10 08:00:00"),40,"AM1234",$aeronaveAzul,$azul);
+echo "\n";
+$vooAC1329 = $sistema->cadastraVoo($Confins,$Guarulhos,new DateTime("2021-05-10 08:00:00"), 40 ,"AD1234",$aeronaveAzul,$azul);
+
+echo "\n";
+
+$vooDiarioManha = $sistema->cadastraVoo($Confins,$Guarulhos,new DateTime("2022-06-06 08:00:00"), 40 ,"AD777",$aeronaveAzul,$azul,'diario');
+
+$vooDiarioTarde = $sistema->cadastraVoo($Confins,$Guarulhos,new DateTime("2022-06-06 15:00:00"), 40 ,"AD000",$aeronaveAzul,$azul,'diario');
+
+$sistema->gerarViagens();

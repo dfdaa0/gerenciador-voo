@@ -3,15 +3,15 @@ declare(strict_types=1);
 include_once('Persiste.php');
 class CiaAerea extends persist{
     private string $nome;
-    private int $codigo;
+    private string $codigo;
     private string $razaoSocial;
     private string $cnpj;
     private string $sigla;
     private float $precoBagagem;
-    private array $veiculos;
+    private array $veiculos = [];
     static private $filename = 'cia.txt';
     
-    public function __construct(int $codigo, string $nome, string $razaoSocial, string $cnpj, string $sigla, float $precoBagagem) {
+    public function __construct(string $codigo, string $nome, string $razaoSocial, string $cnpj, string $sigla, float $precoBagagem) {
         $this->codigo = $codigo;
         $this->nome = $nome;
         $this->razaoSocial = $razaoSocial;
@@ -70,6 +70,10 @@ class CiaAerea extends persist{
         throw new Exception("Preço da bagagem deve ser maior que 0.");
       }
       $this->precoBagagem = $precoBagagem;
+    }
+
+    public function addVeiculo(Veiculo $veiculo){
+      array_push($this->veiculos, $veiculo);
     }
 
 }

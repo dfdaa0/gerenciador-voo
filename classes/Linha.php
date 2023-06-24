@@ -6,16 +6,17 @@ class Linha extends persist{
     private Aeroporto $origem;
     private Aeroporto $destino;
     private DateTime $horarioPartida;
-    private array $frequencia;
+    private ?string $frequencia = null;
     private int $duracaoEstimada;
     private string $codLinha;
     private Aeronave $aeronave;
     private ciaAerea $proprietaria;
     static private $filename = 'linha.txt';
 
-    public function __construct(Aeroporto $origem, Aeroporto $destino, DateTime $horarioPartida, int $duracaoEstimada, string $codLinha, Aeronave $aeronave, CiaAerea $proprietaria) {
+    public function __construct(Aeroporto $origem, Aeroporto $destino, DateTime $horarioPartida, int $duracaoEstimada, string $codLinha, Aeronave $aeronave, CiaAerea $proprietaria, string $frequencia = null) {
           $this->proprietaria = $proprietaria;    
           $this->origem = $origem;
+          $this->frequencia = $frequencia;
           $this->destino = $destino;
           $this->horarioPartida = $horarioPartida;
           $this->duracaoEstimada = $duracaoEstimada;
@@ -53,7 +54,9 @@ class Linha extends persist{
         /* a implementar*/
     }    
   
-   
+    public function getFrequencia() {
+        return $this->frequencia;
+    }
     public function getAeronave() {
         return $this->aeronave;
     }
@@ -63,6 +66,20 @@ class Linha extends persist{
     }
 
     
+    public function setFrequencia(string $freq) {
+        $this->frequencia = $freq;
+    }
+
+      
+    public function setHorarioPartida(DateTime $hora) {
+        $this->horarioPartida->setDate(
+        (int)$hora->format('Y'),
+        (int)$hora->format('m'),
+        (int)$hora->format('d')
+    );
+    }
+    
+
 
     public function getCiaAerea() {
         return $this->proprietaria;

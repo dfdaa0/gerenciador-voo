@@ -6,8 +6,8 @@ include_once('Persiste.php');
 class Viagem extends persist{
   private Linha $linha;
   private Aeronave $aeronave;
-  private Datetime $horaPartida;
-  private Datetime $horaChegada;
+  private? Datetime $horaPartida;
+  private? Datetime $horaChegada;
   private Array $vagas;
   private float $precoMin;
   private int $pontosViagem;
@@ -15,8 +15,9 @@ class Viagem extends persist{
   private bool $chegadaOcorreu;
   static private $filename = 'viagem.txt';
 
-  public function __construct(Linha $linha, Aeronave $aeronave) {
+  public function __construct(Linha $linha, Aeronave $aeronave, $horaPartida) {
     $this->aeronave = $aeronave;
+    $this->horaPartida = $horaPartida;
     $this->setVagas();
     $this->linha = $linha;
     $this->partidaOcorreu = false;
@@ -58,8 +59,7 @@ class Viagem extends persist{
   }
 
   public function setHoraPartida(DateTime $horaPartida) {
-    $this->horaPartida = $horaPartida;
-    $this->partidaOcorreu = true;
+    $this->horaPartida->setDate($horaPartida);
   }
 
   public function getHoraChegada() {
