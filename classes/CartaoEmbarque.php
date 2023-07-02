@@ -11,9 +11,8 @@ class CartaoEmbarque extends persist{
     private int $assento;
     static private $filename = 'cartao_embarque.txt';
 
-    public function __construct(string $nome, string $sobrenome, Aeroporto $origem, Aeroporto $destino, DateTime $horarioViagem, int $assento){
+    public function __construct(string $nome, Aeroporto $origem, Aeroporto $destino, DateTime $horarioViagem, int $assento){
         $this->nome = $nome;
-        $this->sobrenome = $sobrenome;
         $this->origem = $origem;
         $this->destino = $destino;
         $this->horarioViagem = $horarioViagem;
@@ -28,10 +27,7 @@ class CartaoEmbarque extends persist{
         return $this->nome;
     }
 
-    public function getSobrenome(){
-        return $this->sobrenome;
-    }
-
+    
     public function getHorarioViagem(){
         return $this->horarioViagem;
     }

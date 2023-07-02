@@ -5,8 +5,8 @@ class Passagem extends persist{
   private Passageiro $passageiro;
   private Aeroporto $origem;
   private Aeroporto $destino;
-  private Array $viagens;
-  private Array $status;
+  private Viagem $viagens;
+  private EnumStatus $status;
   private String $codBarras;
   private Array $franquias;
   private float $valorMulta;
@@ -16,12 +16,12 @@ class Passagem extends persist{
     return get_called_class()::$filename;
   }
  
-  Public Function __construct(Passageiro $passageiro, Array $viagens, String $codBarras, Array $franquias, float $valorMulta){
+  Public Function __construct(Passageiro $passageiro, Viagem $viagens, String $codBarras, Array $franquias, float $valorMulta){
     $this->viagens = $viagens;
     $this->geraStatus($viagens);
     $this->passageiro = $passageiro;
-    $this->origem = $this->viagens[0]->getLinha()->getOrigem();
-    $this->destino = $this->viagens[count($viagens)-1]->getLinha()->getDestino();
+    $this->origem = $this->viagens->getLinha()->getOrigem();
+    $this->destino = $this->viagens->getLinha()->getDestino();
     $this->viagens = $viagens;
     $this->codBarras = $codBarras;
     if($this->checaFranquias($franquias)){
@@ -70,41 +70,37 @@ class Passagem extends persist{
     return true;
   }
 
-  private function geraStatus(array $viagens){
+  private function geraStatus(){
     
-    for ($i=0; $i < count($viagens); $i++) { 
-      $this->status[$viagens[$i]->getLinha()->getCodLinha()] = EnumStatus::PassagemAdquirida;
-    }
+    
+      $this->status = EnumStatus::PassagemAdquirida;
+    
     
   }
 
   public function fazCheckIn(){
-    $n = count($this->status);
-    for ($i=0; $i < $n; $i++) {
-      $codigo = $this->viagens[$i]->getLinha()->getCodLinha(); 
-      $this->status[$codigo] = EnumStatus::CheckinRealizado;
-    }
-  }
-
-  public function cancelaPassagem(){
-    $n = count($this->status);
-    for ($i=0; $i < $n; $i++) {
-      $codigo = $this->viagens[$i]->getLinha()->getCodLinha(); 
-      $this->status[$codigo] = EnumStatus::PassagemCancelada;
-    }
+     
+      $this->status = EnumStatus::CheckinRealizado;
     
   }
 
-  public function fazEmbarque(Viagem $viagem){
-    $this->status[$viagem->getLinha()->getCodLinha()] = EnumStatus::EmbarqueRealizado;
+  public function cancelaPassagem(){
+    
+      $this->status = EnumStatus::PassagemCancelada;
+    
+    
+  }
+
+  public function fazEmbarque(){
+    $this->status = EnumStatus::EmbarqueRealizado;
   }
 
   public function fazNoShow(){
-    $n = count($this->status);
-    for ($i=0; $i < $n; $i++) { 
-      $codigo = $this->viagens[$i]->getLinha()->getCodLinha(); 
-      $this->status[$codigo] = EnumStatus::NoShow;
-    }
+    
+   
+      
+      $this->status = EnumStatus::NoShow;
+    
   }
 
   public function getValorMulta(){
